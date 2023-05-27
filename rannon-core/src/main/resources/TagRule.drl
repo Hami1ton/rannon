@@ -1,0 +1,15 @@
+import java.util.List;
+import org.rannon.core.Dialogue
+import org.rannon.core.AnnotatedDialogue
+
+rule "天気"
+    when
+        $annotatedDialogues : List()
+        $dialogue : Dialogue( value.contains("天気")  )
+    then
+        AnnotatedDialogue annotatedDialogue = new AnnotatedDialogue();
+        annotatedDialogue.setDialogue($dialogue.value());
+        annotatedDialogue.setTag("天気予報タグ");
+        $annotatedDialogues.add(annotatedDialogue);
+        System.out.println( "ルール発火" );
+end
