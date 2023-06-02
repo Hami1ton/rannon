@@ -11,7 +11,7 @@ public class RuleStringBuilderTest {
 
         String aa = RuleStringBuilder.createRule();
 
-        assertEquals("import java.util.List;\\r\\nimport org.rannon.core.Dialogue;\\r\\n", aa);
+        assertEquals("import java.util.List;\\r\\nimport org.rannon.core.model.Dialogue;\\r\\n", aa);
     }
 
 }

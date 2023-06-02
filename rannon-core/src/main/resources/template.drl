@@ -1,16 +1,28 @@
 import java.util.List;
-import org.rannon.core.Dialogue
-import org.rannon.core.AnnotatedDialogue
+import org.rannon.core.model.RannonText
+import org.rannon.core.model.AnnotatedText
 
 
-rule "天気"
+rule "天気_タグあり"
     when
-        $annotatedDialogues : List()
-        $dialogue : Dialogue( value.contains("天気")  )
+        $annotatedTexts : List()
+        $rannonText : RannonText( value.contains("天気")  )
     then
-        AnnotatedDialogue annotatedDialogue = new AnnotatedDialogue();
-        annotatedDialogue.setDialogue($dialogue.value());
-        annotatedDialogue.setTag("天気予報タグ");
-        $annotatedDialogues.add(annotatedDialogue);
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("天気予報タグ");
+        $annotatedTexts.add(at);
+        System.out.println( "ルール発火" );
+end
+
+rule "天気_タグなし"
+    when
+        $annotatedTexts : List()
+        $rannonText : RannonText( !value.contains("天気")  )
+    then
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("");
+        $annotatedTexts.add(at);
         System.out.println( "ルール発火" );
 end

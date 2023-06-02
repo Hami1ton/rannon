@@ -1,9 +1,7 @@
 package org.rannon.core;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,8 +11,8 @@ public class RuleStringBuilder {
     public static String createRule() {
         StringBuilder aa = new StringBuilder("");
         aa.append("import java.util.List; \n");
-        aa.append("import org.rannon.core.Dialogue;\n");
-        aa.append("import org.rannon.core.AnnotatedDialogue;\n");
+        aa.append("import org.rannon.core.model.Dialogue;\n");
+        aa.append("import org.rannon.core.model.AnnotatedDialogue;\n");
         aa.append("rule \"天気\"\n");
         aa.append("    when\n");
         aa.append("        $annotatedDialogues : List();\n");
