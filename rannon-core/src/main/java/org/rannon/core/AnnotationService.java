@@ -8,7 +8,9 @@ import org.kie.internal.builder.KnowledgeBuilder;
 import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.io.ResourceFactory;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +21,13 @@ public class AnnotationService {
 
 //    StatelessKieSession kieSession = kieContainer.newStatelessKieSession();
 
-    public List<AnnotatedDialogue> annotate(List<Dialogue> dialogues) throws UnsupportedEncodingException {
+    public List<AnnotatedDialogue> annotate(List<Dialogue> dialogues) throws IOException, URISyntaxException {
 
         // result data
         List<AnnotatedDialogue> annotatedDialogues = new ArrayList<>();
 
         // set up drl
-        String ruleString = RuleStringBuilder.createDrlMessage();
+        String ruleString = RuleStringBuilder.createRuleFromFile();
         KnowledgeBuilder kb = KnowledgeBuilderFactory.newKnowledgeBuilder();
 
         kb.add(ResourceFactory.newByteArrayResource(ruleString.getBytes("utf-8")), ResourceType.DRL);

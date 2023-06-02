@@ -1,8 +1,16 @@
 package org.rannon.core;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class RuleStringBuilder {
 
-    public static String createDrlMessage() {
+    public static String createRule() {
         StringBuilder aa = new StringBuilder("");
         aa.append("import java.util.List; \n");
         aa.append("import org.rannon.core.Dialogue;\n");
@@ -22,5 +30,12 @@ public class RuleStringBuilder {
         System.out.println(aa.toString());
 
         return aa.toString();
+    }
+
+    public static String createRuleFromFile() throws IOException, URISyntaxException {
+        Path file = Paths.get(RuleStringBuilder.class.getClassLoader().getResource("template.drl").toURI());
+        String text = Files.readString(file);
+        System.out.println(text);
+        return text;
     }
 }

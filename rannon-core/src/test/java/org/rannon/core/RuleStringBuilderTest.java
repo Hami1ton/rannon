@@ -9,7 +9,7 @@ public class RuleStringBuilderTest {
     @Test
     void test() {
 
-        String aa = RuleStringBuilder.createDrlMessage();
+        String aa = RuleStringBuilder.createRule();
 
         assertEquals("import java.util.List;\\r\\nimport org.rannon.core.Dialogue;\\r\\n", aa);
     }
