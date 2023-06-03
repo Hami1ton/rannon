@@ -1,4 +1,4 @@
-rule "add tag rule"
+rule "add tag rule 0"
     when
         $annotatedTexts : List()
         $rannonText : RannonText( value.contains("天気")  )
@@ -10,7 +10,7 @@ rule "add tag rule"
         System.out.println( "ルール発火" );
 end
 
-rule "non add tag rule"
+rule "non add tag rule 0"
     when
         $annotatedTexts : List()
         $rannonText : RannonText( !value.contains("天気")  )

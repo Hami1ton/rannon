@@ -1,4 +1,4 @@
-rule "add tag rule"
+rule "add tag rule TEMPLATE_INDEX"
     when
         $annotatedTexts : List()
         $rannonText : RannonText( value.contains("TEMPLATE_MATCH_TEXT")  )
@@ -9,8 +9,7 @@ rule "add tag rule"
         $annotatedTexts.add(at);
         System.out.println( "ルール発火" );
 end
-
-rule "non add tag rule"
+rule "non add tag rule TEMPLATE_INDEX"
     when
         $annotatedTexts : List()
         $rannonText : RannonText( !value.contains("TEMPLATE_MATCH_TEXT")  )

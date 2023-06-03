@@ -1,0 +1,48 @@
+import java.util.List;
+import org.rannon.core.model.RannonText
+import org.rannon.core.model.AnnotatedText
+
+rule "add tag rule 0"
+    when
+        $annotatedTexts : List()
+        $rannonText : RannonText( value.contains("天気")  )
+    then
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("天気予報タグ");
+        $annotatedTexts.add(at);
+        System.out.println( "ルール発火" );
+end
+rule "non add tag rule 0"
+    when
+        $annotatedTexts : List()
+        $rannonText : RannonText( !value.contains("天気")  )
+    then
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("");
+        $annotatedTexts.add(at);
+        System.out.println( "ルール発火" );
+end
+rule "add tag rule 1"
+    when
+        $annotatedTexts : List()
+        $rannonText : RannonText( value.contains("お菓子")  )
+    then
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("スイーツタグ");
+        $annotatedTexts.add(at);
+        System.out.println( "ルール発火" );
+end
+rule "non add tag rule 1"
+    when
+        $annotatedTexts : List()
+        $rannonText : RannonText( !value.contains("お菓子")  )
+    then
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("");
+        $annotatedTexts.add(at);
+        System.out.println( "ルール発火" );
+end
