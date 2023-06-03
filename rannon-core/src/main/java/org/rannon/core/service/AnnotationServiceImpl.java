@@ -14,6 +14,7 @@ import org.rannon.core.model.TextMatchTagRule;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,19 +26,8 @@ public class AnnotationServiceImpl implements AnnotationService {
         // result data
         List<AnnotatedText> annotatedTexts = new ArrayList<>();
 
-        // set up drl
-        InternalKnowledgeBase kBase = null;
-        try {
-            String ruleString = RuleStringBuilder.buildRuleString(textMatchTagRules);
-            KnowledgeBuilder kb = KnowledgeBuilderFactory.newKnowledgeBuilder();
-
-            kb.add(ResourceFactory.newByteArrayResource(ruleString.getBytes("utf-8")), ResourceType.DRL);
-            kBase = KnowledgeBaseFactory.newKnowledgeBase();
-            kBase.addPackages(kb.getKnowledgePackages());
-        } catch (URISyntaxException | IOException ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
+        // set up knowledgeBase
+        InternalKnowledgeBase kBase = setUpKnowledgeBase(textMatchTagRules);
 
         // execute rule
         KieSession kSession = kBase.newKieSession();
@@ -49,6 +39,22 @@ public class AnnotationServiceImpl implements AnnotationService {
         kSession.dispose();
 
         return annotatedTexts;
+    }
+
+    private InternalKnowledgeBase setUpKnowledgeBase(List<TextMatchTagRule> textMatchTagRules) {
+        InternalKnowledgeBase kBase = null;
+        try {
+            String ruleString = RuleStringBuilder.buildRuleString(textMatchTagRules);
+            KnowledgeBuilder kb = KnowledgeBuilderFactory.newKnowledgeBuilder();
+
+            kb.add(ResourceFactory.newByteArrayResource(ruleString.getBytes(StandardCharsets.UTF_8)), ResourceType.DRL);
+            kBase = KnowledgeBaseFactory.newKnowledgeBase();
+            kBase.addPackages(kb.getKnowledgePackages());
+        } catch (URISyntaxException | IOException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+        return kBase;
     }
 }
 
