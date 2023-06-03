@@ -6,6 +6,10 @@ import org.rannon.core.model.TextMatchTagRule;
 
 import java.util.List;
 
+/**
+ * AnnotationService
+ *
+ * */
 public interface AnnotationService {
 
     public List<AnnotatedText> annotate(List<RannonText> rannonTexts, List<TextMatchTagRule> textMatchTagRules);
