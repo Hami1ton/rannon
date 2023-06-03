@@ -1,0 +1,23 @@
+rule "add tag rule"
+    when
+        $annotatedTexts : List()
+        $rannonText : RannonText( value.contains("TEMPLATE_MATCH_TEXT")  )
+    then
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("TEMPLATE_TAG");
+        $annotatedTexts.add(at);
+        System.out.println( "ルール発火" );
+end
+
+rule "non add tag rule"
+    when
+        $annotatedTexts : List()
+        $rannonText : RannonText( !value.contains("TEMPLATE_MATCH_TEXT")  )
+    then
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("");
+        $annotatedTexts.add(at);
+        System.out.println( "ルール発火" );
+end

@@ -7,16 +7,17 @@ import org.kie.api.runtime.KieSession;
 import org.kie.internal.builder.KnowledgeBuilder;
 import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.io.ResourceFactory;
+import org.rannon.core.AnnotationService;
 import org.rannon.core.model.AnnotatedText;
 import org.rannon.core.model.RannonText;
-import org.rannon.core.RuleStringBuilder;
+import org.rannon.core.model.TextMatchTagRule;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnnotationService {
+public class AnnotationServiceImpl implements AnnotationService {
 
     public List<AnnotatedText> annotate(List<RannonText> rannonTexts) throws IOException, URISyntaxException {
 
@@ -43,5 +44,9 @@ public class AnnotationService {
         return annotatedTexts;
     }
 
+    @Override
+    public List<AnnotatedText> annotate(List<RannonText> rannonTexts, List<TextMatchTagRule> textMatchTagRules) {
+        return null;
+    }
 }
 

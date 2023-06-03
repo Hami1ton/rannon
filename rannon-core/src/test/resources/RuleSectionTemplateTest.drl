@@ -1,0 +1,23 @@
+rule "add tag rule"
+    when
+        $annotatedTexts : List()
+        $rannonText : RannonText( value.contains("天気")  )
+    then
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("天気予報タグ");
+        $annotatedTexts.add(at);
+        System.out.println( "ルール発火" );
+end
+
+rule "non add tag rule"
+    when
+        $annotatedTexts : List()
+        $rannonText : RannonText( !value.contains("天気")  )
+    then
+        AnnotatedText at = new AnnotatedText();
+        at.setText($rannonText.value());
+        at.setTag("");
+        $annotatedTexts.add(at);
+        System.out.println( "ルール発火" );
+end

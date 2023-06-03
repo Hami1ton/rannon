@@ -2,7 +2,7 @@ package org.rannon.core;
 
 import org.rannon.core.model.AnnotatedText;
 import org.rannon.core.model.RannonText;
-import org.rannon.core.service.AnnotationService;
+import org.rannon.core.service.AnnotationServiceImpl;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,10 +13,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
-        AnnotationService service = new AnnotationService();
-
-//        createRuleFromFile();
-
+        AnnotationServiceImpl service = new AnnotationServiceImpl();
         List<RannonText> list = new ArrayList<>();
         RannonText rannonText_1 = new RannonText("天気がいい");
         RannonText rannonText_2 = new RannonText("今日の天気は晴れ");
