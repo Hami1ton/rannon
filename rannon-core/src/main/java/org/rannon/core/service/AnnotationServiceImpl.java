@@ -19,31 +19,6 @@ import java.util.List;
 
 public class AnnotationServiceImpl implements AnnotationService {
 
-    public List<AnnotatedText> annotate(List<RannonText> rannonTexts) throws IOException, URISyntaxException {
-
-        // result data
-        List<AnnotatedText> annotatedTexts = new ArrayList<>();
-
-        // set up drl
-        String ruleString = RuleStringBuilder.createRuleFromFile();
-        KnowledgeBuilder kb = KnowledgeBuilderFactory.newKnowledgeBuilder();
-
-        kb.add(ResourceFactory.newByteArrayResource(ruleString.getBytes("utf-8")), ResourceType.DRL);
-        InternalKnowledgeBase kBase = KnowledgeBaseFactory.newKnowledgeBase();
-        kBase.addPackages(kb.getKnowledgePackages());
-
-        // execute rule
-        KieSession kSession = kBase.newKieSession();
-        kSession.insert(annotatedTexts);
-        for(RannonText rannonText : rannonTexts) {
-            kSession.insert(rannonText);
-        }
-        kSession.fireAllRules();
-        kSession.dispose();
-
-        return annotatedTexts;
-    }
-
     @Override
     public List<AnnotatedText> annotate(List<RannonText> rannonTexts
             , List<TextMatchTagRule> textMatchTagRules) {

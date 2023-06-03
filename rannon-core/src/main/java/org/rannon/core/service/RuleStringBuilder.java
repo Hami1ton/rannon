@@ -41,11 +41,4 @@ public class RuleStringBuilder {
         text = text.replace("TEMPLATE_TAG", textMatchTagRule.tag());
         return text;
     }
-
-    static String createRuleFromFile() throws IOException, URISyntaxException {
-        Path file = Paths.get(RuleStringBuilder.class.getClassLoader().getResource("template.drl").toURI());
-        String text = Files.readString(file);
-        System.out.println(text);
-        return text;
-    }
 }

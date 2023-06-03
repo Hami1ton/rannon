@@ -7,7 +7,6 @@ rule "add tag rule TEMPLATE_INDEX"
         at.setText($rannonText.value());
         at.setTag("TEMPLATE_TAG");
         $annotatedTexts.add(at);
-        System.out.println( "ルール発火" );
 end
 rule "non add tag rule TEMPLATE_INDEX"
     when
@@ -18,5 +17,4 @@ rule "non add tag rule TEMPLATE_INDEX"
         at.setText($rannonText.value());
         at.setTag("");
         $annotatedTexts.add(at);
-        System.out.println( "ルール発火" );
 end

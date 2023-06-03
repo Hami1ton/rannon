@@ -7,7 +7,6 @@ rule "add tag rule 0"
         at.setText($rannonText.value());
         at.setTag("天気予報タグ");
         $annotatedTexts.add(at);
-        System.out.println( "ルール発火" );
 end
 rule "non add tag rule 0"
     when
@@ -18,5 +17,4 @@ rule "non add tag rule 0"
         at.setText($rannonText.value());
         at.setTag("");
         $annotatedTexts.add(at);
-        System.out.println( "ルール発火" );
 end
