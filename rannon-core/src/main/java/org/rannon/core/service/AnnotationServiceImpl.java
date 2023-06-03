@@ -45,8 +45,35 @@ public class AnnotationServiceImpl implements AnnotationService {
     }
 
     @Override
-    public List<AnnotatedText> annotate(List<RannonText> rannonTexts, List<TextMatchTagRule> textMatchTagRules) {
-        return null;
+    public List<AnnotatedText> annotate(List<RannonText> rannonTexts
+            , List<TextMatchTagRule> textMatchTagRules) {
+        // result data
+        List<AnnotatedText> annotatedTexts = new ArrayList<>();
+
+        // set up drl
+        InternalKnowledgeBase kBase = null;
+        try {
+            String ruleString = RuleStringBuilder.buildRuleString(textMatchTagRules);
+            KnowledgeBuilder kb = KnowledgeBuilderFactory.newKnowledgeBuilder();
+
+            kb.add(ResourceFactory.newByteArrayResource(ruleString.getBytes("utf-8")), ResourceType.DRL);
+            kBase = KnowledgeBaseFactory.newKnowledgeBase();
+            kBase.addPackages(kb.getKnowledgePackages());
+        } catch (URISyntaxException | IOException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+
+        // execute rule
+        KieSession kSession = kBase.newKieSession();
+        kSession.insert(annotatedTexts);
+        for(RannonText rannonText : rannonTexts) {
+            kSession.insert(rannonText);
+        }
+        kSession.fireAllRules();
+        kSession.dispose();
+
+        return annotatedTexts;
     }
 }
 

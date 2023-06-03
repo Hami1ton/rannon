@@ -1,9 +1,12 @@
 package org.rannon.core.model;
 
-public class AnnotatedText {
-    private String text;
+import lombok.*;
 
-    private  String tag;
+@EqualsAndHashCode
+public class AnnotatedText {
+    public String text;
+
+    public String tag;
 
     public String getText() {
         return text;
@@ -23,6 +26,6 @@ public class AnnotatedText {
 
     @Override
     public String toString() {
-        return "AnnotatedDialogue=[text=" + this.text + ", tag=" + this.tag + "]";
+        return "AnnotatedText=[text=" + this.text + ", tag=" + this.tag + "]";
     }
 }
