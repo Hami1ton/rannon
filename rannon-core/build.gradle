@@ -16,8 +16,8 @@ repositories {
 
 dependencies {
     // drools
-    implementation group: 'org.drools', name: 'drools-compiler', version: '7.59.0.Final'
-    implementation group: 'org.drools', name: 'drools-mvel', version: '7.59.0.Final'
+    api group: 'org.drools', name: 'drools-compiler', version: '7.59.0.Final'
+    api group: 'org.drools', name: 'drools-mvel', version: '7.59.0.Final'
 
     // logging
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
