@@ -2,6 +2,8 @@ package org.rannon.core.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AnnotatedTextTest {
@@ -10,16 +12,14 @@ public class AnnotatedTextTest {
         // set up
         AnnotatedText expect = new AnnotatedText();
         expect.setText("今日の天気は晴れ");
-        expect.setTag("天気予報");
+        expect.setTags(Arrays.asList(new Tag("天気"), new Tag("晴れ")));
 
         // execute
         AnnotatedText at = new AnnotatedText();
         at.setText("今日の天気は晴れ");
-        at.setTag("天気予報");
+        at.setTags(Arrays.asList(new Tag("天気"), new Tag("晴れ")));
 
         // assert
-        assertEquals(expect.getText(), at.getText());
-        assertEquals(expect.getTag(), at.getTag());
         assertEquals(expect, at);
     }
 }

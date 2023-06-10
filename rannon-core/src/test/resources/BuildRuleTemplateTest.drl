@@ -1,44 +1,20 @@
 import java.util.List;
 import org.rannon.core.model.RannonText
-import org.rannon.core.model.AnnotatedText
+import org.rannon.core.model.Tag
 
 rule "add tag rule 0"
     when
-        $annotatedTexts : List()
+        $tags : List()
         $rannonText : RannonText( value.contains("天気")  )
     then
-        AnnotatedText at = new AnnotatedText();
-        at.setText($rannonText.value());
-        at.setTag("天気予報タグ");
-        $annotatedTexts.add(at);
-end
-rule "non add tag rule 0"
-    when
-        $annotatedTexts : List()
-        $rannonText : RannonText( !value.contains("天気")  )
-    then
-        AnnotatedText at = new AnnotatedText();
-        at.setText($rannonText.value());
-        at.setTag("");
-        $annotatedTexts.add(at);
+        Tag tag = new Tag("天気予報タグ");
+        $tags.add(tag);
 end
 rule "add tag rule 1"
     when
-        $annotatedTexts : List()
+        $tags : List()
         $rannonText : RannonText( value.contains("お菓子")  )
     then
-        AnnotatedText at = new AnnotatedText();
-        at.setText($rannonText.value());
-        at.setTag("スイーツタグ");
-        $annotatedTexts.add(at);
-end
-rule "non add tag rule 1"
-    when
-        $annotatedTexts : List()
-        $rannonText : RannonText( !value.contains("お菓子")  )
-    then
-        AnnotatedText at = new AnnotatedText();
-        at.setText($rannonText.value());
-        at.setTag("");
-        $annotatedTexts.add(at);
+        Tag tag = new Tag("スイーツタグ");
+        $tags.add(tag);
 end

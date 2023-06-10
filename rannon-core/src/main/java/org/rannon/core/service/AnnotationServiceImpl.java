@@ -10,6 +10,7 @@ import org.kie.internal.io.ResourceFactory;
 import org.rannon.core.AnnotationService;
 import org.rannon.core.model.AnnotatedText;
 import org.rannon.core.model.RannonText;
+import org.rannon.core.model.Tag;
 import org.rannon.core.model.TextMatchTagRule;
 
 import java.io.IOException;
@@ -20,28 +21,7 @@ import java.util.List;
 
 public class AnnotationServiceImpl implements AnnotationService {
 
-    @Override
-    public List<AnnotatedText> annotate(List<RannonText> rannonTexts
-            , List<TextMatchTagRule> textMatchTagRules) {
-        // result data
-        List<AnnotatedText> annotatedTexts = new ArrayList<>();
-
-        // set up knowledgeBase
-        InternalKnowledgeBase kBase = setUpKnowledgeBase(textMatchTagRules);
-
-        // execute rule
-        KieSession kSession = kBase.newKieSession();
-        kSession.insert(annotatedTexts);
-        for(RannonText rannonText : rannonTexts) {
-            kSession.insert(rannonText);
-        }
-        kSession.fireAllRules();
-        kSession.dispose();
-
-        return annotatedTexts;
-    }
-
-    private InternalKnowledgeBase setUpKnowledgeBase(List<TextMatchTagRule> textMatchTagRules) {
+    public InternalKnowledgeBase setUpRuleEngine(List<TextMatchTagRule> textMatchTagRules) {
         InternalKnowledgeBase kBase = null;
         try {
             String ruleString = RuleStringBuilder.buildRuleString(textMatchTagRules);
@@ -55,6 +35,37 @@ public class AnnotationServiceImpl implements AnnotationService {
             throw new RuntimeException(ex);
         }
         return kBase;
+    }
+
+    @Override
+    public List<AnnotatedText> annotate(List<RannonText> rannonTexts
+            , List<TextMatchTagRule> textMatchTagRules) {
+        // result data
+        List<AnnotatedText> annotatedTexts = new ArrayList<>();
+
+        // annotate
+        InternalKnowledgeBase kieBase = setUpRuleEngine(textMatchTagRules);
+        for(RannonText rannonText : rannonTexts) {
+            // annotate
+            AnnotatedText at = annotateSingleText(kieBase, rannonText);
+            annotatedTexts.add(at);
+        }
+
+        return annotatedTexts;
+    }
+
+    AnnotatedText annotateSingleText(InternalKnowledgeBase kieBase, RannonText rannonText) {
+
+        KieSession kieSession = kieBase.newKieSession();
+        List<Tag> tags = new ArrayList<>();
+        // execute rule
+        kieSession.insert(tags);
+        kieSession.insert(rannonText);
+        kieSession.fireAllRules();
+        kieSession.dispose();
+
+        return AnnotatedText.create(rannonText, tags);
+
     }
 }
 
